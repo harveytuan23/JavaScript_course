@@ -10,9 +10,9 @@
 
 <body>
     <div id="mainMeal">
-        <button>1號餐</button>
+        <!-- <button>1號餐</button>
         <button>2號餐</button>
-        <button>3號餐</button>
+        <button>3號餐</button> -->
     </div>
     <div id="sideMeal">
         <button>A</button>
@@ -26,7 +26,8 @@
     </div>
 
     <script>
-        const mainMealMenu = { '1號餐': { 'name': '大麥克', 'price': 72 }, '2號餐': { 'name': '雙層牛肉吉事堡', 'price': 62 }, '3號餐': { 'name': '嫩煎雞腿堡', 'price': 82 } };
+        // const mainMealMenu = { '1號餐': { 'name': '大麥克', 'price': 72 }, '2號餐': { 'name': '雙層牛肉吉事堡', 'price': 62 }, '3號餐': { 'name': '嫩煎雞腿堡', 'price': 82 } };
+        const mainMealMenu = {}
 
         const sideMealMenu = { 'A': { 'name': '中薯+飲料', 'price': 55 }, 'B': { 'name': '冰旋風+飲料', 'price': 85 }, 'C': { 'name': '麥克雞塊+薯條+飲料', 'price': 100 } };
 
@@ -35,6 +36,42 @@
         const mainMealResult = document.querySelector('#mainMealResult');
         const sideMealResult = document.querySelector('#sideMealResult');
         const totalPrice = document.querySelector('#totalPrice');
+
+        fetch('http://127.0.0.1:5000/menu')
+
+            //json轉換成object給javascript使用
+            .then(function (res) {
+                return res.json()
+            })
+            .then(function (menuData) {
+                console.log('menuData', menuData)
+
+                const keys = Object.keys(menuData)
+                console.log('keys', keys)
+
+                let allbtnDoms = '';
+
+                for (let i = 0; i < Object.keys(data).lenth; i++) {
+                    allbtnDoms += `
+                    <button>${Object.keys(data)[i]}</button>`
+                }
+
+                allMenu.innerHTML = allbtnDoms
+                // for (i = 0; i < 3; i++) {
+                //     mainMeal.innerHTML += `
+                //     <button>${keys[i]}</button>`
+                //     mainMealMenu[keys[i]] = menuData[keys[i]];
+                // }
+                // mainMeal.innerHTML = `
+
+                // <button>${keys[0]}</button>
+                // <button>${keys[1]}</button>
+                // <button>${keys[2]}</button>`
+
+
+                // mainMealMenu[keys[1]] = menuData[keys[1]]
+                // mainMealMenu[keys[2]] = menuData[keys[2]]
+            })
 
         let mainMealPrice = 0;
         let sideMealPrice = 0;
@@ -60,6 +97,7 @@
             sideMealResult.innerHTML = `${mealDetail.name}, 價格：${mealDetail.price}`;
             totalPrice.innerHTML = mainMealPrice + sideMealPrice;
         })
+
 
 
 
